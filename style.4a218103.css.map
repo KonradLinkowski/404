@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,EACE,qBACF,CAOA,YAJE,QAAS,CACT,SAOF,CAJA,OACE,aAGF","file":"style.4a218103.css","sourceRoot":"..","sourcesContent":["* {\n  box-sizing: border-box;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n}\n\ncanvas {\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n"]}
