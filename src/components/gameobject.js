@@ -1,9 +1,13 @@
 export class GameObject {
-  constructor(x, y, texture, width, height) {
+  constructor(x, y, texture, width, height, scaleX = 1, scaleY = 1) {
     this.positionX = x
     this.positionY = y
     this.width = width
     this.height = height
+    this.scaleX = scaleX
+    this.scaleY = scaleY
+    this.originX = 0
+    this.originY = 0
     this.rotation = 0
     this.texture = texture
     this.currentFrame = 0
@@ -12,9 +16,7 @@ export class GameObject {
     this.animate(10)
   }
 
-  update() {
-    
-  }
+  update() {}
 
   setFrame(x, y) {
     this.u0 = x * this.width / this.texture.width
@@ -29,17 +31,19 @@ export class GameObject {
   }
 
   draw(canvas) {
+    const originX = this.width * (-this.originX - 1 / 2)
+    const originY = this.height * (-this.originY - 1 / 2)
     canvas.img(
       this.texture, 
-      -this.width / 2,
-      -this.height / 2,
+      originX,
+      originY,
       this.width,
       this.height,
       this.rotation,
       this.positionX,
       this.positionY,
-      1, 
-      1,
+      this.scaleX,
+      this.scaleY,
       this.u0,
       this.v0,
       this.u1,

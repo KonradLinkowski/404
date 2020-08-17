@@ -1,19 +1,21 @@
 import { TS, TCTex } from './libs/ts'
 import kittenstex from './assets/kittens.png'
+import arrowtex from './assets/arrow.png'
 import { Game } from './game'
 
 const $c = document.getElementById('game-canvas')
-
-$c.width = window.innerWidth
-$c.height = window.innerHeight
 const canvas = TS($c)
 
+let game = null
+
 const textures = {
-  kitten: kittenstex
+  kitten: kittenstex,
+  arrow: arrowtex
 }
 
 const move = dir => {
   console.log(dir)
+  game.move(dir)
 }
 
 let touchStart = null
@@ -88,7 +90,7 @@ const createTexture = async ([name, src]) => {
 Promise.all(Object.entries(textures).map(createTexture))
 .then(textures => Object.fromEntries(textures))
 .then(textures => {
-  new Game(canvas, textures)
+  game = new Game(canvas, textures)
 })
 .catch(error => {
   console.error(error)
