@@ -5,6 +5,7 @@
   "repository": "https://github.com/KonradLinkowski/404",
   "author": "Konrad Linkowski",
   "license": "MIT",
+  "browserslist": ["last 1 Chrome version"],
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --public-url ./ --out-dir build",
