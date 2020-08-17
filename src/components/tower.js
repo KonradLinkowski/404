@@ -13,7 +13,7 @@ export class Tower extends GameObject {
 
   animate() {}
   
-  update() {
-    this.positionY += this.speed
+  update({ deltaTime }) {
+    this.positionY += this.speed * deltaTime
   }
 }

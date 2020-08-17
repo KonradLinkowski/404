@@ -13,8 +13,8 @@ export class Enemy extends GameObject {
     this.inRange = false
   }
 
-  update({ player }) {
-    this.positionY += this.speed
+  update({ player, deltaTime }) {
+    this.positionY += this.speed * deltaTime
     this.arrowObject.positionY = this.positionY
     const distance = Math.abs(player.positionY - this.positionY)
     if (distance < 250) {

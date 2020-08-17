@@ -8,7 +8,8 @@ export class Game {
     this.gameObjects = []
     this.enemies = []
     this.textures = textures
-    this.slideSpeed = 2
+    this.slideSpeed = 200
+    this.lastFrameTime = 0
     this.enemiesSpawned = 0
     this.distanceSlided = 0
     const wallSize = 32 * 3
@@ -22,7 +23,6 @@ export class Game {
     }
 
     canvas.bkg(0.227, 0.227, 0.227)
-    this.update()
     this.animate(4)
     this.mainLoop()
   }
@@ -44,14 +44,14 @@ export class Game {
     }, 1000 / fps)
   }
 
-  update() {
+  update(deltaTime) {
     this.gameObjects.forEach(gameObject => {
-      gameObject.update({ player: this.player })
+      gameObject.update({ deltaTime, player: this.player })
     })
     if (this.distanceSlided / (this.canvas.c.height / 4) > this.enemiesSpawned) {
       this.spawnEnemy()
     }
-    this.distanceSlided += this.slideSpeed
+    this.distanceSlided += this.slideSpeed * deltaTime
   }
 
   draw() {
@@ -62,9 +62,11 @@ export class Game {
     this.canvas.flush()
   }
 
-  mainLoop() {
+  mainLoop(elapsedTime = 0) {
     requestAnimationFrame(this.mainLoop.bind(this))
-    this.update()
+    const deltaTime = (elapsedTime - this.lastFrameTime) / 1000
+    this.lastFrameTime = elapsedTime
+    this.update(deltaTime)
     this.draw()
   }
 
