@@ -15,7 +15,9 @@ const textures = {
 
 const move = dir => {
   console.log(dir)
-  game.move(dir)
+  if (dir) {
+    game.move(dir)
+  }
 }
 
 let touchStart = null

@@ -9,6 +9,8 @@ export class Game {
     this.enemies = []
     this.textures = textures
     this.slideSpeed = 2
+    this.enemiesSpawned = 0
+    this.distanceSlided = 0
     const wallSize = 32 * 3
     this.gameObjects.push(
       this.player = new Player(canvas.c.width - wallSize - 16, canvas.c.height - 3 * 32, textures.kitten, 32, 32)
@@ -21,19 +23,17 @@ export class Game {
 
     canvas.bkg(0.227, 0.227, 0.227)
     this.update()
-    this.spawnEnemies(1)
     this.animate(4)
     this.mainLoop()
   }
 
-  spawnEnemies(enemiesPerSecond) {
-    setInterval(() => {
-      const pos = -(Math.random() * 32)
-      const enemy = new Enemy(this.canvas.c.width - 32 * 3 - 16, pos, this.textures.kitten, this.textures.arrow, 32, 32)
-      enemy.speed = this.slideSpeed
-      this.gameObjects.push(enemy)
-      this.enemies.push(enemy)
-    }, 1000 / enemiesPerSecond)
+  spawnEnemy() {
+    const pos = -(Math.random() * 32)
+    const enemy = new Enemy(this.canvas.c.width - 32 * 3 - 16, pos, this.textures.kitten, this.textures.arrow, 32, 32)
+    enemy.speed = this.slideSpeed
+    this.gameObjects.push(enemy)
+    this.enemies.push(enemy)
+    this.enemiesSpawned += 1
   }
 
   animate(fps) {
@@ -48,6 +48,10 @@ export class Game {
     this.gameObjects.forEach(gameObject => {
       gameObject.update({ player: this.player })
     })
+    if (this.distanceSlided / (this.canvas.c.height / 4) > this.enemiesSpawned) {
+      this.spawnEnemy()
+    }
+    this.distanceSlided += this.slideSpeed
   }
 
   draw() {
@@ -67,12 +71,16 @@ export class Game {
   move(dir) {
     const nextEnemy = this.enemies[0]
     if (!nextEnemy) {
+      alert('you lost')
       return
     }
-    if (nextEnemy.inRange && dir === nextEnemy.dir) {
-      const index = this.gameObjects.indexOf(nextEnemy)
-      this.gameObjects.splice(index, 1)
-      this.enemies.shift()
+    if (!nextEnemy.inRange || dir !== nextEnemy.dir) {
+      alert('you lost')
+      return
     }
+    
+    const index = this.gameObjects.indexOf(nextEnemy)
+    this.gameObjects.splice(index, 1)
+    this.enemies.shift()
   }
 }
