@@ -5,15 +5,19 @@
   "repository": "https://github.com/KonradLinkowski/404",
   "author": "Konrad Linkowski",
   "license": "MIT",
-  "browserslist": ["last 1 Chrome version"],
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --public-url ./ --out-dir build",
-    "zip": "yarn build --no-source-maps --out-dir zip && bestzip build.zip zip && sized build.zip"
+    "zip": "yarn build --no-source-maps --out-dir zip && bestzip build.zip zip && rimraf zip && sized build.zip"
   },
   "devDependencies": {
     "bestzip": "^2.1.6",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-clean-dist": "^0.0.6",
+    "rimraf": "^3.0.2",
     "sized": "^2.0.1"
   },
   "dependencies": {}
